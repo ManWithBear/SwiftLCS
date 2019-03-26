@@ -37,6 +37,21 @@ class StringTests: XCTestCase {
         super.tearDown()
     }
 
+    func testPerformance() {
+        measure {
+            for _ in 0..<10 {
+                _ = "laskdhglaksdjglůalsdghaůlsdghlkůasjgůlkasglkůashgklasdhglůkas hgůklasd gůaksldghaksldh asůdklg haslgdh aklsůhalsůkgh ůlaskhg ůlasdgh klsdhg ůlskdhg klsadglkasdglasdksadsajdg lůasjf klasjf lkasjflksag jlksdklsahg lksahg lskgsldhg ůlaskg hasgd".diff("laskhgdlaksdjglůassdghaůlsdghlkůassadfůlkasglkůashgkllůkas hgůklasd gasdksldghaksldh afasdfdklg haslgdh akasdfasdglsůhalsůkgh ůlaskhg ůlasdgasdgh klsdhg ůlskdhg klsadasdksadsajdg lůasjf klasjf lkasjflksag jfasdflksdklsahg lksahg lskgsldhg ůlaasdgasasskg")
+            }
+        }
+    }
+
+    func testPerformance2() {
+        measure {
+            for _ in 0..<10 {
+                _ = "asldjbhůaslbsadgashsdgh".diff("saaldhůaslbsadgahsdghaaa")
+            }
+        }
+    }
     func testSimple() {
         let old = "abcdefg"
         let new = "hibdflm"

@@ -30,29 +30,29 @@ An extension of `Diff`, which adds support for `Foundation` types such as `Index
 public extension Diff where Index: Strideable, Index.Stride: SignedInteger {
     
     /// The indexes whose corresponding values in the old collection are in the LCS (have same identity).
-    public var commonIndexSet: IndexSet {
+    var commonIndexSet: IndexSet {
         return toIndexSet(common)
     }
     
     /// The indexes whose corresponding values in the new collection are updated (have same identity, but different content) against old collection.
-    public var updatedIndexSet: IndexSet {
+    var updatedIndexSet: IndexSet {
         return toIndexSet(updated)
     }
     
     /// The indexes whose corresponding values in the new collection are not in the LCS.
-    public var addedIndexSet: IndexSet {
+    var addedIndexSet: IndexSet {
         return toIndexSet(added)
     }
     
     /// The indexes whose corresponding values in the old collection are not in the LCS.
-    public var removedIndexSet: IndexSet {
+    var removedIndexSet: IndexSet {
         return toIndexSet(removed)
     }
     
     // MARK: - Private
     
     fileprivate func toIndexSet(_ diff: (indexes: [Index], startIndex: Index)) -> IndexSet {
-        let indexes = diff.indexes.map { Int((diff.startIndex..<$0).count.toIntMax()) }
+        let indexes = diff.indexes.map { Int((diff.startIndex..<$0).count) }
         
         return IndexSet(indexes)
     }

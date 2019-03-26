@@ -102,7 +102,7 @@ public extension Collection where Iterator.Element: Diffable {
     - parameter collection: The collection with which to compare the receiver.
     - returns: The diff between the receiver and the given collection.
     */
-    public func diff(_ otherCollection: Self) -> Diff<Index> {
+    func diff(_ otherCollection: Self) -> Diff<Index> {
         let (suffix, suffixIndexes) = self.suffix(otherCollection)
         let (_, prefixIndexes) = self.prefix(otherCollection, suffixLength: suffixIndexes.count)
 
@@ -147,7 +147,7 @@ public extension Collection where Iterator.Element: Diffable {
         
         var prefixIndexes = [Index]()
         var prefix = self.startIndex
-        while let lhs = entry.0 as? Iterator.Element, let rhs = entry.1 as? Iterator.Element, lhs.isIdentityEqual(to: rhs) {
+        while let lhs = entry.0, let rhs = entry.1, lhs.isIdentityEqual(to: rhs) {
             prefixIndexes.append(prefix)
             prefix = self.index(after: prefix)
             
@@ -174,8 +174,8 @@ public extension Collection where Iterator.Element: Diffable {
     }
     
     fileprivate func computeLCS(_ otherCollection: Self, endIndex: Index, prefixLength: Int, suffixLength: Int) -> [Index] {
-        let rows = Int(self.count.toIntMax()) - prefixLength - suffixLength + 1
-        let columns = Int(otherCollection.count.toIntMax()) - prefixLength - suffixLength + 1
+        let rows = Int(self.count) - prefixLength - suffixLength + 1
+        let columns = Int(otherCollection.count) - prefixLength - suffixLength + 1
         var lengths = Array(repeating: Array(repeating: 0, count: columns), count: rows)
         for (i, element) in self.enumerated().dropFirst(prefixLength).dropLast(suffixLength).map({($0.0 - prefixLength, $0.1)}) {
             for (j, otherElement) in otherCollection.enumerated().dropFirst(prefixLength).dropLast(suffixLength).map({($0.0 - prefixLength, $0.1)}) {
@@ -222,7 +222,7 @@ public extension RangeReplaceableCollection where Iterator.Element: Diffable {
     - parameter collection: The collection with which to compare the receiver.
     - returns: The longest common subsequence between the receiver and the given collection.
     */
-    public func longestCommonSubsequence(_ collection: Self) -> Self {
+    func longestCommonSubsequence(_ collection: Self) -> Self {
         return Self(self.diff(collection).commonIndexes.map { self[$0] })
     }
 
@@ -248,21 +248,4 @@ extension String: Diffable {
     public func isContentEqual(to item: String) -> Bool {
         return self == item
     }
-}
-
-/**
-An extension of `String`, which calculates the longest common subsequence between two strings.
-*/
-public extension String {
-
-    /**
-    Returns the longest common subsequence between two strings.
-    
-    - parameter string: The string with which to compare the receiver.
-    - returns: The longest common subsequence between the receiver and the given string.
-    */
-    public func longestCommonSubsequence(_ string: String) -> String {
-        return String(self.characters.longestCommonSubsequence(string.characters))
-    }
-
 }
