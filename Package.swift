@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.7
 //
 // The MIT License (MIT)
 //
@@ -27,5 +27,10 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftLCS",
-    exclude: [ "SwiftLCS Example", "SwiftLCS Tests", "SwiftLCS.xcworkspace" ]
+    products: [
+        .library(name: "SwiftLCS", targets: ["SwiftLCS"])
+    ],
+    targets: [
+        .target(name: "SwiftLCS", path: "./SwiftLCS")
+    ]
 )
