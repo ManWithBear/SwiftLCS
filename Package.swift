@@ -1,3 +1,4 @@
+// swift-tools-version:5.0
 //
 // The MIT License (MIT)
 //
